@@ -1,13 +1,11 @@
-package com.venkatesh.parking_lot_system;
+package com.example.parking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ParkingLotSystemApplication {
-
+public class ParkingApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ParkingLotSystemApplication.class, args);
+		SpringApplication.run(ParkingApplication.class, args);
 	}
-
 }

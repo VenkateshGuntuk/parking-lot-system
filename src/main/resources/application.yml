@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:parkingdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 32791620845-bv5pa7qpiqp03i5tc6lmqk79ad5pgb0e.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - openid
+              - profile
+              - email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.security: INFO
+
+app:
+  security:
+    admin-emails: venkatesh.guntuk@gmail.com,vicx.guntuk@gmail.com
+  allocation:
+    strategy: nearestStrategy

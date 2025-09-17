@@ -1,0 +1,74 @@
+{
+  "info": {
+    "name": "Parking Lot System (new structure)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ticket - Enter (gate-aware)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"plateNo\": \"KA01AB1234\",\n  \"vehicleType\": \"CAR\",\n  \"ownerEmail\": \"user@example.com\",\n  \"parkingLotId\": 1,\n  \"gateId\": 1,\n  \"gateFloor\": 0\n}"},
+        "url": "{{baseUrl}}/api/tickets/enter"
+      }
+    },
+    {
+      "name": "Ticket - Amount Preview",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/tickets/amount/{{ticketId}}"}
+    },
+    {
+      "name": "Ticket - Pay & Exit",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"ticketId\": {{ticketId}}\n}"},
+        "url": "{{baseUrl}}/api/tickets/exit"
+      }
+    },
+    {
+      "name": "Ticket - Receipt",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/tickets/receipt/{{ticketId}}"}
+    },
+    {
+      "name": "Admin - Add Slot",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/slots?floor=0&number=1&type=CAR",
+          "host": ["{{baseUrl}}"],
+          "path": ["api","admin","slots"],
+          "query": [
+            {"key": "floor", "value": "0"},
+            {"key": "number", "value": "1"},
+            {"key": "type", "value": "CAR"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin - Pricing Upsert",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/pricing?type=CAR&freeMinutes=120&ratePerHour=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api","admin","pricing"],
+          "query": [
+            {"key": "type", "value": "CAR"},
+            {"key": "freeMinutes", "value": "120"},
+            {"key": "ratePerHour", "value": "20"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin - Pricing List",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/admin/pricing"}
+    }
+  ],
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080"},
+    {"key": "ticketId", "value": "1"}
+  ]
+} 
