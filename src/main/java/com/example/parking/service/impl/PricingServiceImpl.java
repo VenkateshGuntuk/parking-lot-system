@@ -7,6 +7,7 @@ import com.example.parking.service.interfaces.PricingService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Duration;
 
 @Service
@@ -21,9 +22,9 @@ public class PricingServiceImpl implements PricingService {
 	public BigDecimal calculateAmount(SlotType type, Duration duration) {
 		PricingRule rule = pricingRuleDao.findByType(type).orElseGet(() -> defaultRule(type));
 		long totalMinutes = Math.max(0, duration.toMinutes());
-		long billable = Math.max(0, totalMinutes - rule.getFreeMinutes());
-		BigDecimal hours = new BigDecimal(billable).divide(new BigDecimal("60"), 2, java.math.RoundingMode.UP);
-		return hours.multiply(rule.getRatePerHour());
+		long billableMinutes = Math.max(0, totalMinutes - rule.getFreeMinutes());
+		long billableHours = (long) Math.ceil(billableMinutes / 60.0);
+		return rule.getRatePerHour().multiply(BigDecimal.valueOf(billableHours)).setScale(2, RoundingMode.HALF_UP);
 	}
 
 	private PricingRule defaultRule(SlotType type) {
