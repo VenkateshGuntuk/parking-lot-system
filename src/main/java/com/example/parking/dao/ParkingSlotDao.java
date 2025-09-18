@@ -20,7 +20,6 @@ public interface ParkingSlotDao extends JpaRepository<ParkingSlot, Long> {
     @Query("select s from ParkingSlot s where s.parkingLot.id = :lotId and s.type = :type and s.status = 'AVAILABLE' order by s.floor asc, s.number asc")
     List<ParkingSlot> findLevelWise(@Param("lotId") Long parkingLotId, @Param("type") SlotType type);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from ParkingSlot s where s.parkingLot.id = :lotId and s.type = :type and s.number= :number and s.status = 'AVAILABLE'")
     List<ParkingSlot> findSlotByParkingLotIdAndTypeAndNumber(@Param("lotId") Long parkingLotId, @Param("type") SlotType type, @Param("floor") Integer floor, @Param("number") Integer number);
 

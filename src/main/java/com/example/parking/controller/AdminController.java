@@ -44,7 +44,7 @@ public class AdminController {
 		List<ParkingSlot> parkingSlots = slotDao.findSlotByParkingLotIdAndTypeAndNumber(parkingLotId, type, floor, number);
 		if(parkingSlots.size() > 0){
 			throw new com.example.parking.exception.NoSlotAvailableException(
-					"No available slots for type %s in lot %d".formatted(type, parkingLotId));
+					"Slot already exists for same floor %d, number %d and type %s in lot %d".formatted(floor, number,type, parkingLotId));
 		}
 		ParkingSlot slot = new ParkingSlot();
 		slot.setFloor(floor);
